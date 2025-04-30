@@ -1,9 +1,11 @@
 import React from 'react'
+import Featureasssistant from './components/Featureasssistant'
 
 const Dashboard = () => {
   return (
     <div>
-      hello there
+      <Featureasssistant/>
+      
     </div>
   )
 }
