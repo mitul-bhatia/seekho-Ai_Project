@@ -3,7 +3,9 @@ import React from 'react'
 import { useUser } from '@stackframe/stack'
 import { Button } from '@/components/ui/button';
 import { ExpertsList } from '@/services/Options';
+import { BlurFade } from '@/components/magicui/blur-fade';
 import Image from 'next/image';
+import { TypingAnimation } from "@/components/magicui/typing-animation";
 function Featureasssistant() {
     const user= useUser();
   return (
@@ -11,13 +13,16 @@ function Featureasssistant() {
     <div className='flex justify-between items-center mr-10'>
     
         <div className="max-w-4xl mx-auto px-6 py-10">
+         
             <h2 className="text-4xl font-extrabold text-gray-900 mb-4">My Space</h2>
             <h3 className="text-2xl text-gray-800 mb-2">
             Welcome to your learning world, <span className="font-semibold text-indigo-600">{user.displayName}</span>
             </h3>
               <p className="text-lg text-gray-700 leading-relaxed">
-                    Welcome to your personal space, where you can explore and learn at your own pace.
+                <TypingAnimation>
+                    Welcome to your personal space,</TypingAnimation>
                       </p>
+
               </div>
     <Button>Profile</Button>
 
@@ -25,6 +30,7 @@ function Featureasssistant() {
 
 <div className='ml-15 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 lg:gap-10 mt-10'>
   {ExpertsList.map((options, index) => (
+    <BlurFade key={options.icon} delay={0.25 + index * 0.05} inView>
     <div
       key={index}
       className=' p-4 bg-secondary rounded-3xl flex flex-col justify-center items-center shadow-md hover:shadow-xl transform transition duration-300 hover:scale-110 cursor-pointer'
@@ -38,10 +44,11 @@ function Featureasssistant() {
           className='h-16 w-16 object-contain'
         />
       </div>
-      <h2 className='mt-2 text-center text-sm sm:text-base font-semibold text-gray-800'>
+      <h2 className='mt-2 text-center text-sm sm:text-base font-semibold text-gray-800 hover:text-blue-700'>
         {options.name}
       </h2>
     </div>
+    </BlurFade>
   ))}
 
 </div>
