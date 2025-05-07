@@ -28,16 +28,16 @@ function Featureasssistant() {
             <h3 className="text-2xl text-gray-800 mb-2">
             Welcome to your learning world, <span className="font-semibold text-indigo-600">{user.displayName}</span>
             </h3>
-              {/* <p className="text-lg text-gray-700 leading-relaxed">
-                <TypingAnimation>
-                    Welcome to your personal space,</TypingAnimation>
-                      </p> */}
-
-              </div>
               <p className="text-lg text-gray-700 leading-relaxed">
                 <TypingAnimation>
                     Welcome to your personal space,</TypingAnimation>
                       </p>
+
+              </div>
+              {/* <p className="text-lg text-gray-700 leading-relaxed">
+                <TypingAnimation>
+                    Welcome to your personal space,</TypingAnimation>
+                      </p> */}
     <Button>Profile</Button>
 
   </div>
