@@ -1,7 +1,7 @@
 {
   "name": "seekho",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://mitul-bhatia.github.io/seekho-Ai_Project",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.13",
     "@radix-ui/react-slot": "^1.2.0",
-    "@stackframe/stack": "^2.8.6",
+    "@stackframe/stack": "^2.4.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "convex": "^1.23.0",
@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "gh-pages": "^6.3.0",
     "tailwindcss": "^4"
   },
   "engines": {
     "node": "18.x"
   }
-
 }
