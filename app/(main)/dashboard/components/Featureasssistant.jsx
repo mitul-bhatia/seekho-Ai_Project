@@ -5,7 +5,17 @@ import { Button } from '@/components/ui/button';
 import { ExpertsList } from '@/services/Options';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import Image from 'next/image';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { TypingAnimation } from "@/components/magicui/typing-animation";
+import Userinput from './Userinput';
 function Featureasssistant() {
     const user= useUser();
   return (
@@ -18,12 +28,16 @@ function Featureasssistant() {
             <h3 className="text-2xl text-gray-800 mb-2">
             Welcome to your learning world, <span className="font-semibold text-indigo-600">{user.displayName}</span>
             </h3>
+              {/* <p className="text-lg text-gray-700 leading-relaxed">
+                <TypingAnimation>
+                    Welcome to your personal space,</TypingAnimation>
+                      </p> */}
+
+              </div>
               <p className="text-lg text-gray-700 leading-relaxed">
                 <TypingAnimation>
                     Welcome to your personal space,</TypingAnimation>
                       </p>
-
-              </div>
     <Button>Profile</Button>
 
   </div>
@@ -31,6 +45,7 @@ function Featureasssistant() {
 <div className='ml-15 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 lg:gap-10 mt-10'>
   {ExpertsList.map((options, index) => (
     <BlurFade key={options.icon} delay={0.25 + index * 0.05} inView>
+  <Userinput coachingOption={options}>
     <div
       key={index}
       className=' p-4 bg-secondary rounded-3xl flex flex-col justify-center items-center shadow-md hover:shadow-xl transform transition duration-300 hover:scale-110 cursor-pointer'
@@ -48,6 +63,7 @@ function Featureasssistant() {
         {options.name}
       </h2>
     </div>
+    </Userinput>
     </BlurFade>
   ))}
 

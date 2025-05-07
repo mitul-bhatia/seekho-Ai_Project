@@ -27,3 +27,17 @@ export const ExpertsList = [
 
     }
 ]
+export const coachingExpert=[
+    {
+        name:'Jitesh',
+        avatar:'/t1.png'
+    },
+    {
+        name:'Clea',
+        avatar:'/t2.png' 
+    },
+    {
+        name:'miles',
+        avatar:'/t3.png' 
+    }
+]
