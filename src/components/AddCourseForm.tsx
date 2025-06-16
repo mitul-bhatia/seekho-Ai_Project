@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Alert, AlertDescription } from './ui/alert';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Alert } from "@/components/ui/alert";
+import { Plus } from "lucide-react";
 
 interface AddCourseFormProps {
   onAddCourse: (courseName: string) => void;
@@ -11,48 +13,65 @@ interface AddCourseFormProps {
 }
 
 export function AddCourseForm({ onAddCourse, existingCourses }: AddCourseFormProps) {
-  const [courseName, setCourseName] = useState('');
-  const [error, setError] = useState('');
+  const [courseName, setCourseName] = useState("");
+  const [error, setError] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    if (!courseName.trim()) {
-      setError('Course name cannot be empty');
+    const trimmedName = courseName.trim();
+    
+    if (!trimmedName) {
+      setError("Please enter a course name");
       return;
     }
 
-    if (existingCourses.includes(courseName.trim())) {
-      setError('A course with this name already exists');
+    if (existingCourses.some(course => course.toLowerCase() === trimmedName.toLowerCase())) {
+      setError("This course already exists");
       return;
     }
 
-    onAddCourse(courseName.trim());
-    setCourseName('');
+    onAddCourse(trimmedName);
+    setCourseName("");
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <Input
-            type="text"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            placeholder="Enter course name"
-            className="w-full bg-background text-foreground"
-          />
-        </div>
-        <Button type="submit" className="w-full">
-          Add Course
-        </Button>
-      </form>
-      {error && (
-        <Alert variant="destructive" className="mt-4">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-    </div>
+    <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <CardContent className="p-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label 
+              htmlFor="courseName" 
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Add New Course
+            </label>
+            <div className="flex gap-2">
+              <Input
+                id="courseName"
+                value={courseName}
+                onChange={(e) => setCourseName(e.target.value)}
+                placeholder="Enter course name..."
+                className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                aria-label="Course name"
+              />
+              <Button
+                type="submit"
+                className="bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+                aria-label="Add course"
+              >
+                <Plus className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+          {error && (
+            <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800">
+              {error}
+            </Alert>
+          )}
+        </form>
+      </CardContent>
+    </Card>
   );
 } 
