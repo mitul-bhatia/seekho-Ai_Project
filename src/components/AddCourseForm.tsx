@@ -41,7 +41,7 @@ export function AddCourseForm({ onAddCourse, existingCourses }: AddCourseFormPro
             value={courseName}
             onChange={(e) => setCourseName(e.target.value)}
             placeholder="Enter course name"
-            className="w-full"
+            className="w-full bg-background text-foreground"
           />
         </div>
         <Button type="submit" className="w-full">

@@ -1,99 +1,83 @@
-# Interview Practice App
+# SEEKHO - AI-Powered Interview Practice
 
-A Next.js application for practicing interview questions using the Gemini API. The app allows users to create custom courses and generate interview questions for each course.
+A Next.js application that helps users practice interview questions using AI.
 
 ## Features
 
-- Create and manage custom courses
-- Generate interview questions using Gemini API
-- Responsive design with Tailwind CSS
-- Modern UI components with Shadcn UI
-- Loading states and error handling
+- Course management with predefined and custom courses
+- AI-generated interview questions using Google's Gemini API
+- Answer evaluation and feedback
+- Dark mode support
+- Responsive design
+- Accessibility features
 
 ## Prerequisites
 
-- Node.js 18.0.0 or later
-- npm 9.0.0 or later
-- A Gemini API key
+- Node.js 18+ and npm
+- Google Gemini API key
 
 ## Setup
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd my-interview-app
-   ```
-
+1. Clone the repository
 2. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Create a `.env.local` file in the root directory and add your Gemini API key:
+3. Create a `.env.local` file in the root directory with your Gemini API key:
    ```
    GEMINI_API_KEY=your_api_key_here
    ```
 
-4. Start the development server:
+4. Install required Shadcn UI components:
+   ```bash
+   npx shadcn-ui@latest add button
+   npx shadcn-ui@latest add card
+   npx shadcn-ui@latest add alert
+   npx shadcn-ui@latest add alert-dialog
+   npx shadcn-ui@latest add tooltip
+   npx shadcn-ui@latest add textarea
+   ```
+
+5. Start the development server:
    ```bash
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+## Add your shield logo
+
+1. Place your shield logo image in the `public` directory as `shield-logo.png`
+2. Update `src/app/page.tsx` to use the logo:
+   ```tsx
+   import Image from "next/image";
+   
+   // In your component:
+   <Image
+     src="/shield-logo.png"
+     alt="SEEKHO Logo"
+     width={128}
+     height={128}
+     className="rounded-full"
+   />
+   ```
 
 ## Usage
 
-1. Add a new course using the form at the top of the page
-2. Click the "Practice" button on any course card to generate an interview question
-3. View the generated question below the course list
-4. Add more courses or practice with existing ones
-
-## Notes
-
-- The application uses the Gemini API to generate interview questions
-- Course data is stored in the browser's memory and will reset on page refresh
-- Make sure your Gemini API key is valid and has sufficient quota
-- The app is built with accessibility in mind, supporting keyboard navigation and screen readers
-
-## Technologies Used
-
-- Next.js 15.0.1
-- TypeScript
-- Tailwind CSS 3.4.14
-- Shadcn UI
-- Gemini API
+1. Visit the landing page to see the SEEKHO branding
+2. Click "Get Started" to go to the courses page
+3. Add new courses or use predefined ones
+4. Click "Practice" on a course to start answering questions
+5. Type your answer and submit for evaluation
+6. Receive a score and feedback on your answer
 
 ## Development
 
-To run the development server:
+- Built with Next.js 15.0.1
+- Uses TypeScript for type safety
+- Styled with Tailwind CSS 3.4.14
+- UI components from Shadcn UI
+- AI integration with Google's Gemini API
 
-```bash
-npm run dev
-```
+## License
 
-To build for production:
-
-```bash
-npm run build
-```
-
-To start the production server:
-
-```bash
-npm start
-```
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
