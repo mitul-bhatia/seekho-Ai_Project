@@ -5,90 +5,84 @@ console.log("GEMINI_API_KEY present:", !!process.env.GEMINI_API_KEY);
 
 if (!process.env.GEMINI_API_KEY) {
   console.error("GEMINI_API_KEY is not set in environment variables");
+  throw new Error("Missing GEMINI_API_KEY environment variable");
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export async function generateInterviewQuestion(course: string): Promise<string> {
+export async function generateQuestion(course: string): Promise<string> {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     
-    const prompt = `Generate a challenging interview question for ${course}. The question should be specific to the field and test both technical knowledge and problem-solving abilities. Format the response as a single question without any additional text or numbering.`;
+    const prompt = `Generate a beginner-friendly interview question for ${course}. 
+    The question should be:
+    1. Clear and easy to understand
+    2. Focus on fundamental concepts
+    3. Not too complex or advanced
+    4. Suitable for entry-level positions
+    5. Include a brief explanation of what the interviewer is looking for
     
+    Format the response as:
+    Question: [The question]
+    What we're looking for: [Brief explanation]`;
+
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const question = response.text();
+    const text = response.text();
     
-    if (!question) {
-      throw new Error("No question was generated");
+    if (!text) {
+      throw new Error("No response from the model");
     }
     
-    return question;
+    return text;
   } catch (error) {
     console.error("Error generating question:", error);
-    throw error;
+    if (error instanceof Error) {
+      throw new Error(`Failed to generate question: ${error.message}`);
+    }
+    throw new Error("Failed to generate question. Please try again.");
   }
 }
 
-export async function scoreAnswer(question: string, answer: string): Promise<number> {
+export async function evaluateAnswer(question: string, answer: string): Promise<{ score: number; feedback: string }> {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     
-    const prompt = `Evaluate this answer for the question "${question}": "${answer}". 
-    Consider the following criteria:
-    1. Technical accuracy
-    2. Clarity of explanation
-    3. Problem-solving approach
-    4. Communication skills
-    
-    Return only a number from 0 to 10 representing the overall score. Do not include any other text or explanation.`;
-    
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const scoreText = response.text().trim();
-    
-    // Extract the first number from the response
-    const scoreMatch = scoreText.match(/\d+/);
-    if (!scoreMatch) {
-      throw new Error("Could not parse score from response");
-    }
-    
-    const score = parseInt(scoreMatch[0], 10);
-    if (isNaN(score) || score < 0 || score > 10) {
-      throw new Error("Invalid score received");
-    }
-    
-    return score;
-  } catch (error) {
-    console.error("Error scoring answer:", error);
-    throw error;
-  }
-}
+    const prompt = `Evaluate this interview answer. Be encouraging and constructive in your feedback.
 
-export async function generateFeedback(question: string, answer: string): Promise<string> {
-  try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    
-    const prompt = `Provide constructive feedback for this answer to the question "${question}": "${answer}".
-    Focus on:
-    1. What was done well
-    2. Areas for improvement
-    3. Specific suggestions for better answers
-    4. Technical accuracy and completeness
-    
-    Keep the feedback concise, professional, and actionable.`;
-    
+    Question: ${question}
+    Answer: ${answer}
+
+    Provide:
+    1. A score out of 10
+    2. Specific positive points about the answer
+    3. Areas for improvement
+    4. Tips for a better answer
+    5. Example of a good answer structure
+
+    Format the response as:
+    Score: [number]/10
+    Feedback: [Your detailed feedback]`;
+
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const feedback = response.text();
-    
-    if (!feedback) {
-      throw new Error("No feedback was generated");
+    const text = response.text();
+
+    if (!text) {
+      throw new Error("No response from the model");
     }
-    
-    return feedback;
+
+    // Parse the response to extract score and feedback
+    const scoreMatch = text.match(/Score:\s*(\d+)/);
+    const score = scoreMatch ? parseInt(scoreMatch[1]) : 5;
+    const feedback = text.replace(/Score:\s*\d+\/10\s*/, "").trim();
+
+    return { score, feedback };
   } catch (error) {
-    console.error("Error generating feedback:", error);
-    throw error;
+    console.error("Error evaluating answer:", error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to evaluate answer: ${error.message}`);
+    }
+    throw new Error("Failed to evaluate answer. Please try again.");
   }
 } 

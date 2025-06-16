@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,16 +13,23 @@ export default function CoursePage() {
   const courseName = decodeURIComponent(params.courseName as string);
   
   const [question, setQuestion] = useState<string>("");
+  const [questionContext, setQuestionContext] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [score, setScore] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleGenerateQuestion = async () => {
     setIsLoading(true);
     setError("");
     setQuestion("");
+    setQuestionContext("");
     setAnswer("");
     setScore(null);
     setFeedback("");
@@ -49,7 +56,17 @@ export default function CoursePage() {
         throw new Error("No question was generated");
       }
 
-      setQuestion(data.question);
+      // Parse the response to separate question and context
+      const lines: string[] = data.question.split('\n');
+      const questionLine = lines.find((line: string) => line.startsWith('Question:'));
+      const contextLine = lines.find((line: string) => line.startsWith('What we\'re looking for:'));
+
+      if (questionLine) {
+        setQuestion(questionLine.replace('Question:', '').trim());
+      }
+      if (contextLine) {
+        setQuestionContext(contextLine.replace('What we\'re looking for:', '').trim());
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate question");
     } finally {
@@ -99,6 +116,10 @@ export default function CoursePage() {
     }
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-r from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-2xl mx-auto p-6 space-y-8">
@@ -129,9 +150,19 @@ export default function CoursePage() {
               <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
                 Question:
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
                 {question}
               </p>
+              {questionContext && (
+                <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                  <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                    What we're looking for:
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {questionContext}
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         )}
@@ -169,16 +200,25 @@ export default function CoursePage() {
         {score !== null && (
           <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
             <CardContent className="pt-6">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                Score: {score}/10
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  Your Score
+                </h2>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {score}/10
+                </div>
+              </div>
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                   Feedback:
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {feedback}
-                </p>
+                <div className="prose dark:prose-invert max-w-none">
+                  {feedback.split('\n').map((line, index) => (
+                    <p key={index} className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                      {line}
+                    </p>
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>

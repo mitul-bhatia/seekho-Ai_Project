@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateInterviewQuestion, scoreAnswer, generateFeedback } from "@/lib/gemini";
+import { generateQuestion, evaluateAnswer } from "@/lib/gemini";
 
 export async function POST(request: Request) {
   try {
@@ -24,34 +24,26 @@ export async function POST(request: Request) {
     }
 
     // Handle different actions
-    switch (action) {
-      case "generate":
-        const generatedQuestion = await generateInterviewQuestion(course);
-        return NextResponse.json({ question: generatedQuestion });
-
-      case "evaluate":
-        if (!question || !answer) {
-          return NextResponse.json(
-            { error: "Question and answer are required for evaluation" },
-            { status: 400 }
-          );
-        }
-
-        const [score, feedback] = await Promise.all([
-          scoreAnswer(question, answer),
-          generateFeedback(question, answer)
-        ]);
-
-        return NextResponse.json({ score, feedback });
-
-      default:
+    if (action === "generate") {
+      const generatedQuestion = await generateQuestion(course);
+      return NextResponse.json({ question: generatedQuestion });
+    } else if (action === "evaluate") {
+      if (!question || !answer) {
         return NextResponse.json(
-          { error: "Invalid action specified" },
+          { error: "Question and answer are required for evaluation" },
           { status: 400 }
         );
+      }
+      const result = await evaluateAnswer(question, answer);
+      return NextResponse.json(result);
+    } else {
+      return NextResponse.json(
+        { error: "Invalid action" },
+        { status: 400 }
+      );
     }
   } catch (error) {
-    console.error("Error in API route:", error);
+    console.error("Error in generate-question route:", error);
 
     if (error instanceof Error) {
       // Handle specific error types
