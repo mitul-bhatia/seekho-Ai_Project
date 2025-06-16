@@ -1,41 +1,87 @@
 # Interview Practice App
 
-A Next.js application for practicing interview questions across various courses.
+A Next.js application for practicing interview questions using the Gemini API. The app allows users to create custom courses and generate interview questions for each course.
 
-## Getting Started
+## Features
 
-1. Navigate to the project directory:
-```bash
-cd my-interview-app
-```
+- Create and manage custom courses
+- Generate interview questions using Gemini API
+- Responsive design with Tailwind CSS
+- Modern UI components with Shadcn UI
+- Loading states and error handling
+
+## Prerequisites
+
+- Node.js 18.0.0 or later
+- npm 9.0.0 or later
+- A Gemini API key
+
+## Setup
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd my-interview-app
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. Set up the Gemini API:
-   - Sign up for a Gemini API key at https://aistudio.google.com/
-   - Create a `.env.local` file in the root directory
-   - Add your API key: `GEMINI_API_KEY=your-key-here`
+3. Create a `.env.local` file in the root directory and add your Gemini API key:
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
 
-4. Run the development server:
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+
+1. Add a new course using the form at the top of the page
+2. Click the "Practice" button on any course card to generate an interview question
+3. View the generated question below the course list
+4. Add more courses or practice with existing ones
+
+## Notes
+
+- The application uses the Gemini API to generate interview questions
+- Course data is stored in the browser's memory and will reset on page refresh
+- Make sure your Gemini API key is valid and has sufficient quota
+- The app is built with accessibility in mind, supporting keyboard navigation and screen readers
+
+## Technologies Used
+
+- Next.js 15.0.1
+- TypeScript
+- Tailwind CSS 3.4.14
+- Shadcn UI
+- Gemini API
+
+## Development
+
+To run the development server:
+
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build for production:
 
-## Features
+```bash
+npm run build
+```
 
-- Built with Next.js 15.0.1
-- TypeScript support
-- Tailwind CSS for styling
-- Shadcn UI components
-- Responsive design for mobile and desktop
-- Gemini AI integration for generating interview questions
+To start the production server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm start
+```
 
 ## Learn More
 

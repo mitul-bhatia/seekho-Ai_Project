@@ -2,35 +2,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface Course {
-  id: string;
+  id: number;
   name: string;
 }
 
 interface CourseListProps {
   courses: Course[];
-  onPractice: (courseName: string) => void;
-  loading?: boolean;
+  onPractice: (course: Course) => void;
+  selectedCourse: Course | null;
 }
 
-export function CourseList({ courses, onPractice, loading = false }: CourseListProps) {
+export function CourseList({ courses, onPractice, selectedCourse }: CourseListProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {courses.map((course) => (
-        <Card 
+        <Card
           key={course.id}
-          className="transition-shadow duration-200 hover:shadow-md"
+          className={`transition-all duration-200 hover:shadow-lg ${
+            selectedCourse?.id === course.id ? "ring-2 ring-primary" : ""
+          }`}
         >
           <CardHeader>
-            <CardTitle className="text-xl font-semibold">{course.name}</CardTitle>
+            <CardTitle className="text-xl">{course.name}</CardTitle>
           </CardHeader>
           <CardContent>
             <Button
-              onClick={() => onPractice(course.name)}
-              disabled={loading}
-              className="w-full bg-green-600 text-white hover:bg-green-700 disabled:opacity-50"
-              aria-label={`Practice for ${course.name}`}
+              onClick={() => onPractice(course)}
+              className="w-full"
+              variant={selectedCourse?.id === course.id ? "default" : "outline"}
             >
-              {loading ? 'Generating...' : 'Practice'}
+              Practice
             </Button>
           </CardContent>
         </Card>
