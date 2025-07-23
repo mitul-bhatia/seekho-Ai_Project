@@ -59,24 +59,42 @@ export function CourseList() {
   });
 
   return (
-    <div className="grid gap-4">
-      {courses.map((course) => (
-        <Card key={course.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-          <CardContent className="pt-6">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {course.name}
-              </h3>
-              <div className="flex gap-2">
-                <Link href={`/courses/${encodeURIComponent(course.name)}`}>
-                  <Button
-                    className="bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
-                    aria-label={`Practice ${course.name}`}
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    {/* //   <div className="max-w-4xl mx-auto p-6 space-y-8">
+    //     <div className="flex justify-between items-center">
+    //       <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+    //         SEEKHO
+    //       </h1>
+    //       <div className="flex items-center gap-4">
+    //         <ThemeToggle />
+    //       </div>
+    //     </div> */}
+
+        {error && (
+          <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800">
+            {error}
+          </Alert>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {sortedCourses.map((course) => (
+            <Card 
+              key={course.id} 
+              className={`bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow ${
+                course.isFavorite ? 'ring-2 ring-yellow-500 dark:ring-yellow-400' : ''
+              }`}
+            >
+              <CardContent className="p-6">
+                <div className="flex justify-between items-start">
+                  <Link 
+                    href={`/courses/${encodeURIComponent(course.name)}`}
+                    className="flex-1 group"
                   >
-                    Practice
-                  </Button>
-                </Link>
-                <AlertDialog>
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                      {course.name}
+                    </h2>
+                  </Link>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>

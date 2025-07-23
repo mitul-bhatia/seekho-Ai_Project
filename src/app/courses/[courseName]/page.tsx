@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,11 +19,6 @@ export default function CoursePage() {
   const [feedback, setFeedback] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleGenerateQuestion = async () => {
     setIsLoading(true);
@@ -115,10 +110,6 @@ export default function CoursePage() {
       setIsLoading(false);
     }
   };
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
