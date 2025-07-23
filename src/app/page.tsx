@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ArrowRight, Brain, Target, Trophy, Users } from "lucide-react";
+import { Globe } from "@/components/magicui/globe";
 
 const features = [
   {
@@ -90,9 +91,9 @@ export default function LandingPage() {
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
               {/* Replace with your hero image */}
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                Hero Image Placeholder
-              </div>
+              <div className="relative h-[400px] rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+  <Globe className="absolute inset-0 w-full h-full" />
+</div>
             </div>
           </div>
         </div>
