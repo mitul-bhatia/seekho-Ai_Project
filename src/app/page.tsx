@@ -58,7 +58,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-4">
               <ThemeToggle />
-              <Link href="/courses">
+              <Link href="/api/auth/signin">
                 <Button className="bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100">
                   Get Started
                 </Button>

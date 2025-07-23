@@ -1,9 +1,22 @@
 "use client";
+import { useSession, signIn } from "next-auth/react";
+import { useEffect } from "react";
 import UserGreeting from "@/components/UserGreeting";
 import { CourseList } from "@/components/CourseList";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function CoursesPage() {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      signIn(undefined, { callbackUrl: "/courses" }); // Redirect to sign-in, then back to courses
+    }
+  }, [status]);
+
+  if (status === "loading") return <div>Loading...</div>;
+  if (!session) return null;
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Navbar */}
