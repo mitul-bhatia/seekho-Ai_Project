@@ -26,7 +26,11 @@ const features = [
 
 const testimonials = [
   {
+<<<<<<< HEAD
     name: "Sarah Johnson",
+=======
+    name: "Sarah Chen",
+>>>>>>> bbadddbd0bdce7fcbeaca8543b4778dfcc64c41d
     role: "Software Engineer at Google",
     text: "SEEKHO helped me prepare for my technical interviews. The AI-generated questions were spot on!"
   },
