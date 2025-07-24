@@ -57,14 +57,14 @@ export default function CoursePage() {
       // const contextLine = lines.find((line: string) => line.startsWith('What we\'re looking for:'));
       data.question = data.question.replace("```json\n","")
       data.question = data.question.replace("\n```","")
-      console.log(JSON.parse(data.question))
+      var jsonDATA = JSON.parse(data.question)
 
-      // if (questionLine) {
-      //   setQuestion(questionLine.replace('Question:', '').trim());
-      // }
-      // if (contextLine) {
-      //   setQuestionContext(contextLine.replace('What we\'re looking for:', '').trim());
-      // }
+      if (jsonDATA.question) {
+        setQuestion(jsonDATA.question.replace('Question:', '').trim());
+      }
+      if (jsonDATA.looking_for) {
+        setQuestionContext(jsonDATA.looking_for.replace('What we\'re looking for:', '').trim());
+      }
     } catch (err) {
       console.log(err)
       setError(err instanceof Error ? err.message : "Failed to generate question");
