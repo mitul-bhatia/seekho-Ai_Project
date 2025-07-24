@@ -25,8 +25,8 @@ export async function generateQuestion(course: string): Promise<string> {
     Format the response as JSON:
     {question:[The question],
     looking_for:[Brief explanation]}
-    
-    strictly GIVE response in JSON`;
+
+    strictly GIVE response in JSON FORMAT not Markdown`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
