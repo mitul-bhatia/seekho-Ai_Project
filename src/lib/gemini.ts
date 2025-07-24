@@ -22,9 +22,11 @@ export async function generateQuestion(course: string): Promise<string> {
     4. Suitable for entry-level positions
     5. Include a brief explanation of what the interviewer is looking for
     
-    Format the response as:
-    Question: [The question]
-    What we're looking for: [Brief explanation]`;
+    Format the response as JSON:
+    {question:[The question],
+    looking_for:[Brief explanation]}
+    
+    strictly GIVE response in JSON`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;

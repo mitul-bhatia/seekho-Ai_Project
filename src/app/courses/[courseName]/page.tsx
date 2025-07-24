@@ -63,6 +63,7 @@ export default function CoursePage() {
         setQuestionContext(contextLine.replace('What we\'re looking for:', '').trim());
       }
     } catch (err) {
+      console.log(err)
       setError(err instanceof Error ? err.message : "Failed to generate question");
     } finally {
       setIsLoading(false);
@@ -205,7 +206,7 @@ export default function CoursePage() {
                 </h3>
                 <div className="prose dark:prose-invert max-w-none">
                   {feedback.split('\n').map((line, index) => (
-                    <p key={index} className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p key={index} className="text-gray-700 dark:text-gray-300 ">
                       {line}
                     </p>
                   ))}
