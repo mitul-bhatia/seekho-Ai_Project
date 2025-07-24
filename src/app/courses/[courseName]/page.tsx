@@ -55,9 +55,9 @@ export default function CoursePage() {
       // const lines: string[] = data.question.split('\n');
       // const questionLine = lines.find((line: string) => line.startsWith('Question:'));
       // const contextLine = lines.find((line: string) => line.startsWith('What we\'re looking for:'));
-      data.replace("```json\n","")
-      data.replace("```\n","")
-      console.log(JSON.parse(data))
+      data.question.replace("```json\n","")
+      data.question.replace("```\n","")
+      console.log(JSON.parse(data.question))
 
       // if (questionLine) {
       //   setQuestion(questionLine.replace('Question:', '').trim());
