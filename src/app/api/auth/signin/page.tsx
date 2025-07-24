@@ -7,7 +7,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     getProviders().then((prov) => setProviders(prov));
-  }, []);
+  }, []); // ye different providers ke liye use hota hai aur ye useEffect hook hai jiske through hum providers ko get karte hai
 
   if (!providers) return <div>Loading...</div>;
 

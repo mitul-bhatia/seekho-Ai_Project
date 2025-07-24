@@ -8,8 +8,9 @@ import { Alert } from "@/components/ui/alert";
 import { Plus } from "lucide-react";
 
 interface AddCourseFormProps {
-  onAddCourse: (courseName: string) => void;
-  existingCourses: string[];
+  onAddCourse: (courseName: string) => void; // ye  jo add kiya wah course hai woh  void bhi ho sakta hai
+  
+  existingCourses: string[]; // ye existingCourses hai jiske through hum existing courses ko get karen hai
 }
 
 export function AddCourseForm({ onAddCourse, existingCourses }: AddCourseFormProps) {

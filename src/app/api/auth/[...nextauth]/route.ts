@@ -21,3 +21,5 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
+// GET: For things like fetching providers, OAuth callbacks, signing out, etc.
+// POST: For submitting credentials, some OAuth flows, etc

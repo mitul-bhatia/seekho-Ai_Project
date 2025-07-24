@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       }
       if (error.message.includes("quota")) {
         return NextResponse.json(
-          { error: "API quota exceeded" },
+          { error: "API too much exc eeded" },
           { status: 429 }
         );
       }
